@@ -26,6 +26,6 @@ Thumbs.db
 *.log
 logs/
 
-# Secrets (use SOPS for encrypted secrets)
-secrets.yaml
+# Secrets (decrypted secrets should never be committed)
+*-decrypted.yaml
 *.dec.yaml
