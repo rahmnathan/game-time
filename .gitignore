@@ -1,0 +1,31 @@
+# Maven
+target/
+*.jar
+*.war
+
+# Node
+node_modules/
+node/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.project
+.classpath
+.settings/
+
+# Build artifacts
+src/main/resources/static/built/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Secrets (use SOPS for encrypted secrets)
+secrets.yaml
+*.dec.yaml

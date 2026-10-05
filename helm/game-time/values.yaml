@@ -1,0 +1,45 @@
+# Game Time Helm Values
+# helm upgrade --install -n game-time game-time ./helm/game-time
+
+image:
+  repository: rahmnathan/game-time
+  tag: "1"
+  pullPolicy: IfNotPresent
+
+replicaCount: 1
+
+service:
+  type: ClusterIP
+  port: 8080
+
+resources:
+  requests:
+    memory: "256Mi"
+    cpu: "100m"
+  limits:
+    memory: "512Mi"
+    cpu: "500m"
+
+database:
+  host: postgres-rw.postgres-18.svc.cluster.local
+  port: 5432
+  name: gametime
+  user: gametime
+  # password should be set via secrets
+
+httpRoute:
+  enabled: true
+  hostname: game-time.nathanrahm.com
+  gateway:
+    name: main-gateway
+    namespace: envoy-gateway-system
+
+probes:
+  liveness:
+    path: /actuator/health/liveness
+    initialDelaySeconds: 30
+    periodSeconds: 10
+  readiness:
+    path: /actuator/health/readiness
+    initialDelaySeconds: 10
+    periodSeconds: 5
