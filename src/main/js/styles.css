@@ -95,10 +95,34 @@ h1 {
     color: #777;
 }
 
-.slot-games {
-    font-size: 0.9rem;
-    color: #555;
+.game-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
     margin-bottom: 12px;
+}
+
+.game-tag {
+    background: #e8f4fd;
+    color: #2980b9;
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.game-select {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    background: white;
+    cursor: pointer;
+}
+
+.game-select:focus {
+    outline: none;
+    border-color: #3498db;
 }
 
 .participant-info {

@@ -50,24 +50,12 @@ public class SlotService {
             throw new IllegalStateException("Cannot join a cancelled slot");
         }
 
-        // Check if already joined with this phone number
-        var existing = participantRepository.findBySlotIdAndPhone(slotId, request.phone());
-        if (existing.isPresent()) {
-            Participant p = existing.get();
-            if (!p.getCancelled()) {
-                throw new IllegalStateException("Already joined this slot");
-            }
-            // Re-joining after cancelling
-            p.setCancelled(false);
-            participantRepository.save(p);
-        } else {
-            Participant participant = Participant.builder()
-                    .slot(slot)
-                    .firstName(request.firstName())
-                    .phone(request.phone())
-                    .build();
-            participantRepository.save(participant);
-        }
+        Participant participant = Participant.builder()
+                .slot(slot)
+                .firstName(request.firstName())
+                .preferredGame(request.preferredGame())
+                .build();
+        participantRepository.save(participant);
 
         log.info("Participant {} joined slot {}", request.firstName(), slotId);
         return getSlot(slotId);

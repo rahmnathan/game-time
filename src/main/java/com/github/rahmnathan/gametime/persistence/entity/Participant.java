@@ -26,11 +26,8 @@ public class Participant {
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(nullable = false)
-    private String phone;
-
-    @Builder.Default
-    private Boolean confirmed = false;
+    @Column(name = "preferred_game")
+    private String preferredGame;
 
     @Builder.Default
     private Boolean cancelled = false;

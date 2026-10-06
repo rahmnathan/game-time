@@ -4,7 +4,7 @@ const App = () => {
     const [slots, setSlots] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [joinForm, setJoinForm] = useState({ slotId: null, firstName: '', phone: '' });
+    const [joinForm, setJoinForm] = useState({ slotId: null, firstName: '', preferredGame: '' });
     const [joining, setJoining] = useState(false);
     const [successMessage, setSuccessMessage] = useState(null);
 
@@ -36,7 +36,7 @@ const App = () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     firstName: joinForm.firstName,
-                    phone: joinForm.phone
+                    preferredGame: joinForm.preferredGame || null
                 })
             });
 
@@ -45,8 +45,8 @@ const App = () => {
                 throw new Error(err.detail || 'Failed to join');
             }
 
-            setSuccessMessage(`You're in! We'll text you at ${joinForm.phone} with updates.`);
-            setJoinForm({ slotId: null, firstName: '', phone: '' });
+            setSuccessMessage(`You're in, ${joinForm.firstName}! See you there.`);
+            setJoinForm({ slotId: null, firstName: '', preferredGame: '' });
             fetchSlots();
         } catch (err) {
             setError(err.message);
@@ -66,6 +66,16 @@ const App = () => {
         });
     };
 
+    const parseGames = (gamesStr) => {
+        if (!gamesStr) return [];
+        return gamesStr.split(',').map(g => g.trim()).filter(g => g);
+    };
+
+    const getCurrentSlotGames = () => {
+        const slot = slots.find(s => s.id === joinForm.slotId);
+        return slot ? parseGames(slot.games) : [];
+    };
+
     if (loading) {
         return <div className="container"><p>Loading...</p></div>;
     }
@@ -75,7 +85,6 @@ const App = () => {
             <header>
                 <h1>Game Time</h1>
                 <p className="subtitle">Hi, I'm Nathan on the 4th floor. Join me for cards in the lobby!</p>
-                <p className="games">Games: Monopoly Deal, SkyJo, Skip-Bo, Cribbage</p>
             </header>
 
             {error && <div className="error">{error}</div>}
@@ -92,7 +101,13 @@ const App = () => {
                                 <span className="slot-location">{slot.location}</span>
                             </div>
 
-                            {slot.games && <p className="slot-games">{slot.games}</p>}
+                            {slot.games && (
+                                <div className="game-tags">
+                                    {parseGames(slot.games).map((game, idx) => (
+                                        <span key={idx} className="game-tag">{game}</span>
+                                    ))}
+                                </div>
+                            )}
 
                             <div className="participant-info">
                                 {slot.participantCount === 0 ? (
@@ -115,13 +130,16 @@ const App = () => {
                                         required
                                         maxLength={50}
                                     />
-                                    <input
-                                        type="tel"
-                                        placeholder="Phone (for updates only)"
-                                        value={joinForm.phone}
-                                        onChange={e => setJoinForm({ ...joinForm, phone: e.target.value })}
-                                        required
-                                    />
+                                    <select
+                                        value={joinForm.preferredGame}
+                                        onChange={e => setJoinForm({ ...joinForm, preferredGame: e.target.value })}
+                                        className="game-select"
+                                    >
+                                        <option value="">Any game is fine</option>
+                                        {getCurrentSlotGames().map((game, idx) => (
+                                            <option key={idx} value={game}>{game}</option>
+                                        ))}
+                                    </select>
                                     <div className="form-buttons">
                                         <button type="submit" disabled={joining}>
                                             {joining ? 'Joining...' : "I'm in!"}
@@ -129,7 +147,7 @@ const App = () => {
                                         <button
                                             type="button"
                                             className="cancel"
-                                            onClick={() => setJoinForm({ slotId: null, firstName: '', phone: '' })}
+                                            onClick={() => setJoinForm({ slotId: null, firstName: '', preferredGame: '' })}
                                         >
                                             Cancel
                                         </button>
@@ -155,7 +173,7 @@ const App = () => {
             )}
 
             <footer>
-                <p>Your phone number is only used to notify you about this event. It's never shared.</p>
+                <p>Questions? I'm in unit 412.</p>
             </footer>
         </div>
     );
