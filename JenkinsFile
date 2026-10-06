@@ -108,6 +108,7 @@ spec:
                     sops decrypt ./target/classes/game-time/secrets.yaml > ./target/classes/game-time/secrets-decrypted.yaml
                     helm upgrade --install -n game-time game-time ./target/classes/game-time/ \
                         -f ./target/classes/game-time/secrets-decrypted.yaml \
+                        --set image.tag=${NEW_VERSION} \
                         --kubeconfig $KUBE_CONFIG
                     rm -f ./target/classes/game-time/secrets-decrypted.yaml
                 '''
