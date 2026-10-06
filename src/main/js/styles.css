@@ -69,6 +69,7 @@ h1 {
 /* Calendar Layout */
 .calendar {
     display: flex;
+    flex-wrap: nowrap;
     gap: 16px;
     overflow-x: auto;
     padding-bottom: 16px;
@@ -76,9 +77,7 @@ h1 {
 }
 
 .day-column {
-    flex: 0 0 auto;
-    min-width: 160px;
-    max-width: 200px;
+    flex: 0 0 160px;
 }
 
 .day-header {
