@@ -12,7 +12,7 @@ body {
 }
 
 .container {
-    max-width: 500px;
+    max-width: 800px;
     margin: 0 auto;
     padding: 20px;
 }
@@ -24,19 +24,13 @@ header {
 
 h1 {
     font-size: 2rem;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     color: #2c3e50;
 }
 
 .subtitle {
-    font-size: 1.1rem;
-    color: #555;
-    margin-bottom: 8px;
-}
-
-.games {
-    font-size: 0.95rem;
-    color: #777;
+    font-size: 1rem;
+    color: #666;
 }
 
 .error {
@@ -64,92 +58,147 @@ h1 {
     padding: 40px 0;
 }
 
-.slots {
+/* Calendar Layout */
+.calendar {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    padding-bottom: 16px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.day-column {
+    flex: 0 0 auto;
+    min-width: 160px;
+    max-width: 200px;
+}
+
+.day-header {
+    text-align: center;
+    padding: 12px 8px;
+    background: #ecf0f1;
+    border-radius: 10px 10px 0 0;
+    border-bottom: 2px solid #ddd;
+}
+
+.day-header.today {
+    background: #3498db;
+    border-bottom-color: #2980b9;
+}
+
+.day-header.today .day-name,
+.day-header.today .day-date {
+    color: white;
+}
+
+.day-name {
+    display: block;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: #555;
+    letter-spacing: 0.5px;
+}
+
+.day-date {
+    display: block;
+    font-size: 0.8rem;
+    color: #888;
+    margin-top: 2px;
+}
+
+.day-slots {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
+    padding-top: 12px;
 }
 
+/* Slot Cards */
 .slot-card {
     background: white;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.2s, transform 0.2s;
 }
 
-.slot-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
+.slot-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
-.slot-time {
+.slot-card.expanded {
+    box-shadow: 0 4px 16px rgba(52, 152, 219, 0.25);
+    border: 2px solid #3498db;
+}
+
+.slot-time-badge {
+    display: inline-block;
+    background: #2c3e50;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.9rem;
     font-weight: 600;
-    font-size: 1.1rem;
-    color: #2c3e50;
+    margin-bottom: 8px;
 }
 
 .slot-location {
-    font-size: 0.9rem;
-    color: #777;
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 8px;
 }
 
 .game-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 12px;
+    gap: 6px;
+    margin-bottom: 10px;
 }
 
 .game-tag {
     background: #e8f4fd;
     color: #2980b9;
-    padding: 4px 12px;
-    border-radius: 16px;
-    font-size: 0.85rem;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
     font-weight: 500;
 }
 
-.game-select {
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 1rem;
-    background: white;
-    cursor: pointer;
-}
-
-.game-select:focus {
-    outline: none;
-    border-color: #3498db;
-}
-
 .participant-info {
-    margin-bottom: 16px;
-    padding: 10px;
+    margin-bottom: 12px;
+    padding: 8px;
     background: #f8f9fa;
     border-radius: 6px;
+    font-size: 0.85rem;
 }
 
 .participant-info .empty {
-    color: #888;
+    color: #999;
     font-style: italic;
 }
 
 .participant-info .count {
     color: #27ae60;
-    font-weight: 500;
+    font-weight: 600;
+    display: block;
+}
+
+.participant-info .names {
+    display: block;
+    color: #666;
+    font-weight: 400;
+    font-size: 0.8rem;
+    margin-top: 4px;
 }
 
 .join-button {
     width: 100%;
-    padding: 14px;
+    padding: 10px;
     background: #3498db;
     color: white;
     border: none;
-    border-radius: 8px;
-    font-size: 1rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
     transition: background 0.2s;
@@ -159,17 +208,18 @@ h1 {
     background: #2980b9;
 }
 
+/* Join Form */
 .join-form {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
 }
 
 .join-form input {
-    padding: 12px;
+    padding: 10px;
     border: 1px solid #ddd;
     border-radius: 6px;
-    font-size: 1rem;
+    font-size: 0.9rem;
 }
 
 .join-form input:focus {
@@ -177,17 +227,31 @@ h1 {
     border-color: #3498db;
 }
 
+.game-select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    background: white;
+    cursor: pointer;
+}
+
+.game-select:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
 .form-buttons {
     display: flex;
-    gap: 10px;
+    gap: 8px;
 }
 
 .form-buttons button {
     flex: 1;
-    padding: 12px;
+    padding: 10px;
     border: none;
     border-radius: 6px;
-    font-size: 1rem;
+    font-size: 0.85rem;
     font-weight: 600;
     cursor: pointer;
 }
@@ -218,10 +282,10 @@ h1 {
 .chat-link {
     display: block;
     text-align: center;
-    margin-top: 12px;
+    margin-top: 10px;
     color: #3498db;
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
 }
 
 .chat-link:hover {
@@ -233,4 +297,27 @@ footer {
     text-align: center;
     font-size: 0.85rem;
     color: #888;
+}
+
+/* Mobile: Stack days vertically */
+@media (max-width: 600px) {
+    .calendar {
+        flex-direction: column;
+    }
+
+    .day-column {
+        min-width: 100%;
+        max-width: 100%;
+    }
+
+    .day-header {
+        border-radius: 10px 10px 0 0;
+    }
+
+    .day-slots {
+        background: #fafafa;
+        padding: 12px;
+        border-radius: 0 0 10px 10px;
+        margin-bottom: 8px;
+    }
 }
