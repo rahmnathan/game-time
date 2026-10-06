@@ -120,6 +120,13 @@ const App = () => {
             <header>
                 <h1>Game Time</h1>
                 <p className="subtitle">Join us for games in the lobby!</p>
+                {slots.length > 0 && slots[0].games && (
+                    <div className="header-games">
+                        {parseGames(slots[0].games).map((game, idx) => (
+                            <span key={idx} className="game-tag">{game}</span>
+                        ))}
+                    </div>
+                )}
             </header>
 
             {error && <div className="error">{error}</div>}
@@ -149,13 +156,6 @@ const App = () => {
                                             <div className="slot-location">{slot.location}</div>
                                         )}
 
-                                        {slot.games && (
-                                            <div className="game-tags">
-                                                {parseGames(slot.games).map((game, idx) => (
-                                                    <span key={idx} className="game-tag">{game}</span>
-                                                ))}
-                                            </div>
-                                        )}
 
                                         <div className="participant-info">
                                             {slot.participantCount === 0 ? (
