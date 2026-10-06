@@ -12,7 +12,7 @@ import java.util.UUID;
 @Repository
 public interface SlotRepository extends JpaRepository<Slot, UUID> {
 
-    @Query("SELECT s FROM Slot s WHERE s.dateTime >= :now AND s.cancelled = false ORDER BY s.dateTime")
+    @Query("SELECT DISTINCT s FROM Slot s LEFT JOIN FETCH s.participants WHERE s.dateTime >= :now AND s.cancelled = false ORDER BY s.dateTime")
     List<Slot> findUpcomingSlots(OffsetDateTime now);
 
     @Query("SELECT s FROM Slot s LEFT JOIN FETCH s.participants WHERE s.id = :id")
