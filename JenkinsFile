@@ -39,7 +39,7 @@ spec:
         stage('Checkout') {
             steps {
                 script {
-                    git 'https://github.com/rahmnathan/game-time.git'
+                    git branch: 'main', url: 'https://github.com/rahmnathan/game-time.git'
                 }
             }
         }
